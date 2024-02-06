@@ -1,0 +1,39 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_PRISMA_URL")
+}
+
+model City {
+  id          Int    @id
+  name        String @db.VarChar()
+  countryCode String @map("countrycode") @db.VarChar()
+  district    String @db.VarChar()
+  population  Int
+
+  @@map("city")
+}
+
+model Country {
+  code            String            @id @db.VarChar(3)
+  name            String            @db.VarChar()
+  continent       String            @db.VarChar()
+  region          String            @db.VarChar()
+  surfaceArea     Float             @map("surfacearea")
+  indepYear       Int?              @map("indepyear")
+  population      Int
+  lifeExpectancy  Float?            @map("lifeexpectancy")
+  gnp             Float?
+  gnpOld          Float?            @map("gnpold")
+  localName       String            @map("localname") @db.VarChar()
+  governmentForm  String            @map("governmentform") @db.VarChar()
+  headOfState     String?           @map("headofstate") @db.VarChar()
+  capital         Int?
+  code2           String            @db.VarChar(2)
+
+  @@map("country")
+}
